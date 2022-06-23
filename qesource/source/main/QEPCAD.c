@@ -21,13 +21,6 @@ Quantifier Elimination by Partial Cylindrical Algebraic Decomposition.
 void QepcadCls::QEPCAD(Word Fs, Word *t_, Word *F_e_, Word *F_n_, Word *F_s_)
 {
        Word A,D,F,F_e,F_n,F_s,Fh,J,P,Q,Ths,f,i,r,t, T;
-
-	   // To satisfy Visual Studio Debugger.
-	   t = 0;
-	   F_e = 0;
-	   F_n = 0;
-	   F_s = 0;
-
        /* hide Ths,i,t; */
        Word cL,**cC,cr,ce,ci,*cT,cj,cs,cl,ct; /* Chris variables. */
        Word Cs,Ps,Qs,Pps,Cps,Qps,SF; /* Chris variables. */
@@ -60,14 +53,15 @@ Step2: /* Projection. */
                /*Int PCNSTEP = 1; */
        PROJECT(r,A,&P,&J);
                /*Int*/ if (PCCONTINUE == TRUE) { goto Return; }
-
+       
 Step3: /* Truth-invariant CAD. */
+       if (PCTRACKUNSATCORE) { UNSATCORE.prepareForLift(); }
                /*Int*/ NMFPF = 0;
                /*Int*/ for (i=1; i<=f; i++) NMFPF=NMFPF+LENGTH(LELTI(P,i));
                /*Int*/ PCNSTEP = 1;
        D = TICAD(Q,F,f,P,A);
                /*Int*/ if (PCCONTINUE == TRUE) { goto Return; }
-
+       
 Step4: /* Solution. */
                /*Int*/ GVPC = D;
                /*Int*/ PCNSTEP = 1;

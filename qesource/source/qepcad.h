@@ -34,7 +34,7 @@ Word AFPNIPDB(Word Mb, Word B);
 void AFUPGCDB(Word M, Word A, Word B, Word *C_, Word *Ab_, Word *Bb_);
 void AFUPLM(Word M, Word A, Word *L_, Word *P_);
 void AFUPRWR(Word a, Word v, Word A, Word I);
-Word AFUPSFNDB(Word M, Word B, Word *t_, Word *Bt_, Word *F_);
+void AFUPSFNDB(Word M, Word B, Word *t_, Word *Bt_, Word *F_);
 Word APPEND(Word P, Word k, Word R);
 void APPENDEC(Word P, Word k, Word R, Word *Ps_, Word *F_);
 void ATOMFLWR(Word N, Word V, Word A);
@@ -208,7 +208,7 @@ void PRINTBANNER();
 void PRLDB();
 void PRODWR(Word v);
 void PROMPT();
-void PROPAGATE(Word D, Word c, Word k, Word f, Word Q);
+//void PROPAGATE(Word D, Word c, Word k, Word f, Word Q);
 void PRQUIT();
 void PRTRACEA();
 void PRTRACED();
@@ -607,6 +607,7 @@ Word setECHO(Word k);
 Word setWASBKSP(Word k);
 void PushOutputContext(ostream &out);
 void PopOutputContext();
+ostream& TopOutputContext();
 void OutputContextInit();
 
 

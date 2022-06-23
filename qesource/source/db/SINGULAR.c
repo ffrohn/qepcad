@@ -7,10 +7,7 @@ using namespace std;
 SingularServer::SingularServer(string SingularBase)
 {
   string SingularCall = SingularBase + "/Singular";
-#ifdef _MSC_VER
-  std::cerr << "fork() not supported!" << std::endl;
-  std::exit(1);
-#else
+  
   // Fork
   childpid = fork();
   if (childpid == -1) { perror("Failed to fork!"); exit(1); }
@@ -36,7 +33,6 @@ SingularServer::SingularServer(string SingularBase)
       outofSingular.closeOut();
       exit(0);
   }
-#endif
 }
 
 SingularServer::~SingularServer()

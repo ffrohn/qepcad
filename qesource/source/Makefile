@@ -19,6 +19,8 @@ FLAGSo = -O4
 CCd        =  g++
 FLAGSd = -g
 
+ARFLAGS := crvU
+
 # ============================================================
 # The readline library is in different places on solaris, i.e.
 # not in /usr/lib ... also, it depends on curses.
@@ -42,7 +44,7 @@ EXTLIBS   =	${qe}/extensions/sfext/sfexto.a \
 		${qe}/extensions/adj2d/adj2do.a \
 		${qe}/extensions/rend/rendo.a \
 		${saclib}/lib/saclibo.a \
-		-lreadline \
+		-lreadline -lrt \
 		${SPECLFLAGS}
 
 
@@ -52,7 +54,7 @@ EXTLIBSD  =	${qe}/extensions/sfext/sfextd.a \
 		${qe}/extensions/adj2d/adj2dd.a \
 		${qe}/extensions/rend/rendd.a \
 		${saclib}/lib/saclibd.a \
-		-lreadline \
+		-lreadline -lrt \
 		${SPECLFLAGS}
 
 NAME      =  qepcad
@@ -793,11 +795,15 @@ $(OBJS_SACLIBd)
 # ============================================================
 opt:		override CFLAGS = $(FLAGSo)
 opt:		override CC = $(CCo)
-opt:		$(DEPENDENCIESo)
-		ranlib $(LIB)
-		@echo Linking the optimized program......
-		$(CCo) $(FLAGSo) $(INCLUDES) saclib/GCSI.c saclib/FAIL.c \
-			$(LIB) $(EXTLIBS) $(LIB) $(EXTLIBS) -o $(EXE)
+opt:	dolib dolink
+
+dolib:	$(DEPENDENCIESo)
+
+dolink:	dolib
+	ranlib $(LIB)
+	@echo Linking the optimized program......
+	$(CCo) $(FLAGSo) $(INCLUDES) saclib/GCSI.c saclib/FAIL.c \
+	  $(LIB) $(EXTLIBS) $(LIB) $(EXTLIBS) -o $(EXE)
 
 
 deb:		override CFLAGS = $(FLAGSd)

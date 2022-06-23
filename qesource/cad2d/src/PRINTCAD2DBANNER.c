@@ -4,18 +4,21 @@
 #include "cad2d.h"
 
 /* $Format: "static const char* version = \"$ProjectVersion$\";"$ */
-static const char* version = "1.69";
+static const char* version = "1.74";
 
 /* $Format: "static const char* versdate = \"$ProjectDate$\";"$ */
-static const char* versdate = "Fri, 16 Mar 2012 10:21:38 -0400";
+static const char* versdate = "Thu Feb 25 14:48:53 EST 2021";
 
 static void setversline() {
   int j;
   SWRITE("QEPCAD Version B ");
   SWRITE(version);
   SWRITE(", ");
-  for(j = 5; j < 16; j++)
+  for(j = 4; j < 10; j++)
     CWRITE(versdate[j]);
+  while(versdate[++j] != '\0');
+  while(versdate[--j] != ' ');
+  SWRITE(versdate + j);
 }
 
 void PRINTCAD2DBANNER()

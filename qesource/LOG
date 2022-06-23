@@ -121,3 +121,34 @@ call to make in $qe/source to fail.  I filed a bug report
 any rate folks will be using 3.82 for a while, I modified 
 $qe/source/Makefile to work around the problem.  The makefile 
 is harder to mantain now, but at least it works. 
+
+3/14/2016
+Fixed bug in EVALUATE that probably never caused any problems,
+but could in theory cause a segfault.  It had to do with how
+GVWL (the witness list) was handled.
+ALSO:
+- modified "witness list" implementation so that d-witness 
+  provides a witness for any fully quantified formula that
+  has an existential block for the lowest-level variables.
+- moved propogate to become a member function of QepcadCls.
+  in order to implment this change.
+
+2/06/2018
+Fixed a number of bugs that have to do with failing gracefully
+when launched with +N value that's too high.  This also means
+a minor tweak to saclib.  Also added some changes to allow
+Tarski to call Qepcad, like a -t for "timeout" option.  The
+makefile now sets all calls to make to -j1, since there is
+apparently some dependency that's implicit in serial make, that
+needs to be explicit for parallel make ... but I'm unsure where.
+
+3/16/2018
+Added the track-unsat-core, d-unsat-core and
+d-unsat-core-by-index commands.  This required some substantial
+additions.  There are limitations here: first of all,
+equational constraints are handled poorly (though correctly).
+In the presence of equational constraints, all equalities in
+the input formula are automatically part of the unsat core.
+Note that if there are equational constraints declared that do
+not appear explicitly as equations in the input formula, the
+returned unsat core may be invalid.

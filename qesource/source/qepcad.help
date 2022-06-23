@@ -33,7 +33,7 @@ approx-precision 46 abcde m
 @
 approx-precision N
 
-Approximate algebraic numbers to N decimal places.
+Approximate algeraic numbers to N decimal places.
 @
 
 assume 98 a pc
@@ -337,6 +337,22 @@ d-nqf-formula
 Displays the normalized quantifier-free part of the input formula.
 @
 
+d-number-full-dimensional-cells 106 cde d
+@
+d-number-full-dimensional-cells
+
+Displays the number of full-dimensional cells in the current
+CAD.  Note: a lower-level cell with no children is treated
+as a full-dimensional cell.
+@
+
+d-number-leaf-cells 110 cde d
+@
+d-number-leaf-cells
+
+Displays the number of "leaf" cells in the current CAD.
+Note: A "leaf" cell is a cell with no children.
+@
 
 d-number-solutions 84 de d
 @
@@ -467,6 +483,54 @@ Displays all true cells using d-cell.
 @
 
 
+d-unsat-core 107 e d
+@
+d-unsat-core
+
+Displays an "unsat core" of the input formula.  This is
+available only if the "track-unsat-core" option has been
+set.  This command prints out (in Qepcad B syntax) a
+subset of the conjuncts from the input formula that are
+unsatisfiable.  See also: d-unsat-core-by-index and
+track-unsat-core.
+@
+
+d-unsat-core-by-index 108 e d
+@
+d-unsat-core-by-index
+
+Displays an "unsat core" of the input formula.  This is
+available only if the "track-unsat-core" option has been
+set.  This command prints out a list of indices describing
+a subset of the conjuncts from the input formula that are
+unsatisfiable.
+NONTE: these indices start at zero, and will not necessarily
+appear in sorted order!
+
+For example, with the following input formula
+
+  (E x)(E y)[ x^2 + y^2 - 1 < 0 /\ x + y < 0 /\ x y > 0 /\
+              y^2 - x > 0 /\ x y - 1 > 0 ].
+
+we get the following results for d-unsat-core-by-index and
+d-unsat-core.  Note that, as this example shows, there are
+smaller unsat cores, but because Qepcad B is using "partial"
+CAD, at x = 0 it finds x y > 0 to be unsat without lifting
+into y-space, and thus never discovers that x y - 1 > 0 is
+also unsat at x = 0.
+
+  Before Solution >
+  d-unsat-core-by-index
+  [ 0, 2, 4 ]
+
+  Before Solution >
+  d-unsat-core
+  [ (y^2 + x^2 - 1) < 0 /\ (x)(y) > 0 /\ (x y - 1) > 0 ]
+
+See also: d-unsat-core-by-index and track-unsat-core.
+@
+
+
 d-variable-list 11 abcde d
 @
 d-variable-list
@@ -480,8 +544,13 @@ d-witness-list 103 e d
 d-witness-list
 
 Displays all "witnesses" found.  A "witness" is a cell that
-is marked true by trial-evaluation in a totally existentially
-quantified problem --- i.e. a SAT problem.  Witness cells are
+is marked true by trial-evaluation in a fully quantified
+problem in which the lowest-level variables appear in an
+existentially quantified block. In particular, for a fully
+existentially quantified formula, we get the usual witnesses
+one expects for SAT problems.  For a formula with alternations,
+a "witness" is assignment of values to the variables in the
+lowest-level quantified block. Witness cells are
 displayed in order of decreasing dimension.  Because lifting
 stops after the first true cell is found, you are not 
 guaranteed that the highest-degree true cell is found.  Using
@@ -895,11 +964,16 @@ solution-extension  59 de pc
 solution-extension x
  
 Use an alternative solution formula construction method.  The
-parameter x is allowed to be T,E,G, or I.  If x is T, then a
+parameter x is allowed to be T,E,G,N or I.  If x is T, then a
 formula in the usual language of Tarski formulas is produced.
 If x is E, a formula in the language of Extended Tarski formulas
 is produced.  If x is G, then a geometry-based formula is
-produced. Finally, if x is I, and "interactive mode" is entered 
+produced. If x is N, a formula in the extended language is (see
+E) is produced, but CAD Simplification is *not* used if it is
+not known for sure to be safe.  This is relevant when one
+projection factor acts as a "delineating polynomial" for
+another.  Currently, CAD Simplification does not account for
+that. Finally, if x is I, and "interactive mode" is entered 
 and the user is queried to determine how the formula is to be 
 constructed and displayed.
 @
@@ -958,6 +1032,20 @@ M is a trace option which is either 'y' or 'n'.
 
 If D is empty, the specified trace option is applied to all the
 tracable data.
+@
+
+
+track-unsat-core 109 abc pc
+@
+track-unsat-core
+
+This command switches on the additional bookkeeping required to
+support the d-unsat-core and d-unsat-core-by-index commands.  This
+operation is only allowed if the input formula is fully quantified,
+i.e. no free variables and all quantifiers are E (the usual
+existential quantifier) or F (the "exists infinitely many"
+quantifier), and the input formula is a conjunction of regular
+atomic formulas.
 @
 
 

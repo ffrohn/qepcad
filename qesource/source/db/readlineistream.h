@@ -7,14 +7,9 @@
  * editing, history and, eventually, tab-completion.
  ***************************************************************/
 #include <iostream>
-
-#ifdef _MSC_VER
-
-// ...
-
-#else
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <cstring>
 using namespace std;
 
 class readlineInBuff : public streambuf
@@ -27,6 +22,7 @@ public:
   inline readlineInBuff();
   inline readlineInBuff(int fd);
   inline virtual int_type underflow();
+  inline ~readlineInBuff() { free(buff); }
 };
 
 class readlineIstream : public istream
@@ -79,5 +75,3 @@ readlineInBuff::int_type readlineInBuff::underflow()
   }
   return *gptr();
 }
-
-#endif  // _MSC_VER

@@ -31,9 +31,6 @@ public:
       sing->IPRES(r,A,B);
     else
       sac ->IPRES(r,A,B);
-
-	// Petter: What should it return?
-	return 0;
   }
 
   Word IPDSCR(Word r, Word A)
@@ -42,9 +39,6 @@ public:
       sing->IPDSCR(r,A);
     else
       sac ->IPDSCR(r,A);
-
-	// Petter: What should it return?
-	return 0;
   }
 
   Word IPFACTGB(Word r, Word I, Word N)  

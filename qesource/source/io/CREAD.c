@@ -109,13 +109,9 @@ Step2: /* Get a new character. */
 Step3: /* End of file. */
        if (C == EOF)
        {
-         #ifdef _MSC_VER
-		   PushInputContext(std::cin);
-		 #else
-           cerr << "\007\007\007";
-           int fd = open("/dev/tty",O_RDONLY);
-           PushInputContext(*(new readlineIstream(fd)));
-         #endif
+	 cerr << "\007\007\007";
+	 int fd = open("/dev/tty",O_RDONLY);
+	 PushInputContext(*(new readlineIstream(fd)));
          //C = (*currIn).get();
          return CREAD();
        }
