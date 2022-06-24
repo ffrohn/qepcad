@@ -686,15 +686,12 @@ ADD_LIBRARY(rend STATIC
 	)
 set_source_files_properties(${REND_LIB_SOURCE} PROPERTIES LANGUAGE CXX)
 
-ADD_LIBRARY(sfext STATIC
-	${SFEXT_LIB_SOURCE}
-	)
-set_source_files_properties(${SFEXT_LIB_SOURCE} PROPERTIES LANGUAGE CXX)
-
 ADD_LIBRARY(qepcad STATIC
-	${QEPCAD_LIB_SOURCE}
+        ${QEPCAD_LIB_SOURCE}
+        ${SFEXT_LIB_SOURCE}
 	)
 set_source_files_properties(${QEPCAD_LIB_SOURCE} PROPERTIES LANGUAGE CXX)
+set_source_files_properties(${SFEXT_LIB_SOURCE} PROPERTIES LANGUAGE CXX)
 
 install(TARGETS saclib qepcad DESTINATION lib)
 
