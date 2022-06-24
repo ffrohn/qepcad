@@ -20,7 +20,6 @@
 #include <fenv.h>
 #else
 #ifdef _X86_LINUX_
-#include <ieee754.h>
 #include <fenv.h>
 #else
 #ifdef _WIN32
