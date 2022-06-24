@@ -693,9 +693,21 @@ set_source_files_properties(${SFEXT_LIB_SOURCE} PROPERTIES LANGUAGE CXX)
 
 ADD_LIBRARY(qepcad STATIC
 	${QEPCAD_LIB_SOURCE}
-	${SACLIB_HEADERS}
 	)
 set_source_files_properties(${QEPCAD_LIB_SOURCE} PROPERTIES LANGUAGE CXX)
+
+install(TARGETS saclib qepcad DESTINATION lib)
+
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/saclib/include/"
+  DESTINATION "include"
+  FILES_MATCHING
+  PATTERN "*.h")
+
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/qesource/source/"
+  DESTINATION "include/qepcad"
+  FILES_MATCHING
+  PATTERN "*.h"
+)
 
 TARGET_LINK_LIBRARIES(qepcad saclib)
 TARGET_LINK_LIBRARIES(qepcad adj2d)
