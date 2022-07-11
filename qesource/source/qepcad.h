@@ -40,6 +40,7 @@ void APPENDEC(Word P, Word k, Word R, Word *Ps_, Word *F_);
 void ATOMFLWR(Word N, Word V, Word A);
 void ATOMFRDR(Word V, Word *F_, Word *t_);
 void ATOMFWR(Word V, Word A);
+void BEGINQEPCADLIB();
 void BEGINQEPCAD(int &argc, char**& argv);
 Word CAPTURE(Word P, Word M);
 Word CATOMQFF(Word F);

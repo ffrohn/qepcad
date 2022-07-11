@@ -32,6 +32,13 @@ QEPCADContext* GVContext = 0;
 
 int GVTIMEOUTLIMIT = -1;
 
+void BEGINQEPCADLIB()
+{
+  QEGLOBALS();
+  INITSYS();
+  GVCAP = new OriginalPolicy();
+}
+
 void BEGINQEPCAD(int &argc, char**& argv)
 {
   /* Process QEPCAD's command line arguments. 
